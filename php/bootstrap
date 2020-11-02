@@ -3,7 +3,7 @@
 #go into the source directory
 cd $LAMBDA_TASK_ROOT
 
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/var/task/extra-libraries/php/
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/extra-libraries/php/
 
 #execute the runtime
-/var/task/php-cgi /var/task/runtime.php
+/opt/php-cgi /opt/runtime.php

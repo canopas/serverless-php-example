@@ -24,6 +24,7 @@ RUN pip3 install --upgrade awscli
 # Install composer to install guzzlehttp/guzzle.
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Copy php-cgi from amazonlinux:2 image.
 COPY --from=0 /opt/php-bin/bin/php-cgi /
 
 # Copy all files required by lambda function and runtime.
@@ -35,7 +36,7 @@ WORKDIR "/"
 # Install guzzlehttp/guzzle using composer, We are using guzzlehttp/guzzle for http requests.
 RUN composer require guzzlehttp/guzzle && chmod +x bootstrap
 
-# Zip files for deploying to Lambda function
+# Create zip files for deploying to Lambda function
 RUN zip -r runtime.zip extra-libraries bootstrap runtime.php vendor php-cgi && zip -r src.zip src
 
 # Run deploy.sh that contains commands to deploy lambda function.

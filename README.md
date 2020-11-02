@@ -28,16 +28,17 @@ docker build .
 
 ## Platforms Supports
 
-As this repo support integration for Both Laravel and CodeIgniter, There are some different Prerequisites before deploying lambda functions for each type of application.
+As this repo support integration for both Laravel and CodeIgniter, There are some prerequisites before deploying lambda functions for each type of application.
 
 - Set platforms in `php/runtime.php` according your need.
+
+- Put source code in `php/src` directory.
 
 - AWS cannot write logs or cache in Lambda function's directory, we have to create those directories in AWS's `/tmp` directory.
 
 - Laravel And Codeigniter use different storage configuration, all are detailed below.
 
 #### Laravel
-- Put laravel's source code in `php/src` directory, and change `$platform = 1` in runtime.php.
 
 - Laravel writes logs, cache, sessions in `storage`.
    
@@ -56,8 +57,6 @@ As this repo support integration for Both Laravel and CodeIgniter, There are som
 - Also change sessions, cache and views path in all config files respectively.
   
 #### Codeigniter
-
-- Put Codeigniter's source code in `php/src` directory, and change `$platform = 2` in runtime.php.
 
 - Codeigniter writes logs, cache, sessions in `writable`.
    
@@ -83,7 +82,7 @@ As this repo support integration for Both Laravel and CodeIgniter, There are som
      - Used two docker image, 
           - First for compile php binary, that binary will used by further docker image.
           - Second for generating zip files for runtime and functions and deploying Lambda function.
-     - `runtime.zip` contains bootstarp, runtime.zip, php-cgi, vendor and extra-libraries. It will deploy in Lamda's `opt` directory.
+     - `runtime.zip` contains bootstarp, runtime.php, php-cgi, vendor and extra-libraries. It will deploy in Lamda's `opt` directory.
      - `src.zip` contains src.
       
 - #### bootstarp & runtime.php
@@ -101,7 +100,9 @@ As this repo support integration for Both Laravel and CodeIgniter, There are som
      
 - #### extra-Libraries
      - AmazonLinux2 does not provide all shared libraries, those are required by php execution. We can encounter error when running Lambda function.
-        `error while loading shared libraries: libcrypt.so.1: cannot open shared object file: No such file or directory`
+        ````
+        error while loading shared libraries: libcrypt.so.1: cannot open shared object file: No such file or directory.
+        ````
         
      - We have to add those libraries manually.
      
@@ -118,4 +119,4 @@ As this repo support integration for Both Laravel and CodeIgniter, There are som
      - Updated `LD_LIBRARY_PATH` in bootstrap, to point this extra-libraries in AWS lambda runtime.
 
 - #### src
-     - It contains root file for serving our php web applications. 
+     - It contains `index.php` file for serving our php web applications. 
