@@ -34,44 +34,9 @@ As this repo support integration for both Laravel and CodeIgniter, There are som
 
 - Put source code in `php/src` directory.
 
-- AWS cannot write logs or cache in Lambda function's directory, we have to create those directories in AWS's `/tmp` directory.
+- AWS cannot write logs or cache in Lambda function's directory, we have to change configuration of those in their config files.
 
-- Laravel And Codeigniter use different storage configuration, all are detailed below.
-
-#### Laravel
-
-- Laravel writes logs, cache, sessions in `storage`.
-   
-- Create storage directories like views, sessions, cache and logs using `mkdir()` at the top of `runtime.php`. 
-    
-    ````
-    i.e. for logs , 
-         mkdir('/tmp/laravel/storage/framework/logs', 0777, true);
-    ````
-  
-- We have to change `path` in `config/logging.php`.
-    
-    ````
-     'path' => '/tmp/laravel/storage/framework/logs/laravel.log'
-    ````
-- Also change sessions, cache and views path in all config files respectively.
-  
-#### Codeigniter
-
-- Codeigniter writes logs, cache, sessions in `writable`.
-   
-- Create storage directories using `mkdir()` at the top of `runtime.php`. 
-    
-    ````
-    i.e for logs ,
-        mkdir('/tmp/writable/logs' , 0777, true);
-    ````
-- We have to change `WRITEPATH` path in `system/bootstrap.php`. 
-    
-    ````
-     define('WRITEPATH', '/tmp/writable/');
-    ````
-- Also, Update `$app->run()` in `public/index.php` to
+- If you are using codeigniter, Update `$app->run()` in `public/index.php` to
     ````
     $response = $app->run();
     ````
