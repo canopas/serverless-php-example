@@ -14,8 +14,8 @@ By Creating API-Gateway in AWS, We can check our running web applications.
 1) Clone the repo
 
 ```
-git clone git@github.com:canopas/serverless-php-todo.git
-cd serverless-php-todo
+git clone https://github.com/canopas/serverless-php.git
+cd serverless-php
 ```
 
 2) Configure your AWS credentials, region and IAM role in `php/deploy.sh`
@@ -71,7 +71,7 @@ As this repo support integration for both Laravel and CodeIgniter, There are som
     ````
      define('WRITEPATH', '/tmp/writable/');
     ````
-- Also, Update `$app->run()` in `public\index.php` to
+- Also, Update `$app->run()` in `public/index.php` to
     ````
     $response = $app->run();
     ````
