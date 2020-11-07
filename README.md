@@ -34,13 +34,17 @@ As this repo support integration for both Laravel and CodeIgniter, There are som
 
 - Put source code in `php/src` directory.
 
-- AWS cannot write logs or cache in Lambda function's directory, we have to change configuration of those in their config files.
-
 - If you are using codeigniter, Update `$app->run()` in `public/index.php` to
     ````
     $response = $app->run();
     ````
-  
+
+#### Storage
+
+- AWS cannot write logs or cache in Lambda function's directory, we have to change configuration of those in their config files.
+
+- You can configure `database` or `redis` for sessions and cache and `stdout` for logs in Laravel And Codeigniter.
+
 ## Explanation
 
 - #### DockerFile
